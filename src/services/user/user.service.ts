@@ -1,12 +1,13 @@
-import { prisma } from '../lib/prisma';
-import { Prisma } from '../../generated/prisma/client';
+import { prisma } from '../../lib/prisma';
+import { Prisma } from '../../../generated/prisma/client';
 
 interface setUsers {
     name: string,
-    email: string
+    email: string,
+    password: string
 }
 export async function setUserService(req: setUsers) {
-    const { name, email } = req
+    const { name, email, password } = req
     try {
 
         const setUser = await prisma.user.create({ data: { name, email } })
