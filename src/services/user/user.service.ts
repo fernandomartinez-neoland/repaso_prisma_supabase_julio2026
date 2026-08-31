@@ -2,6 +2,8 @@
 import { prisma } from "../../lib/prisma";
 import { Prisma } from "../../../generated/prisma/client";
 import { hashPassword, comparePass } from "../bcrypt/bcrypt.service";
+import {createToken} from '../token/token.service'
+
 // interfaces
 interface setUsers {
   name: string;
@@ -65,7 +67,12 @@ export async function loginService(req: setLogin) {
         message: "clave o correo incorrectos",
       };
     }
-
-    return { status: 200, message: "usuario logeado" };
-  } catch (e) {}
+    const token=createToken({name:getUser.name, email:getUser.email})
+    console.log(token)
+    return { status: 200, message: {
+        token
+    } };
+  } catch (e) {
+    console.log(e)
+  }
 }
