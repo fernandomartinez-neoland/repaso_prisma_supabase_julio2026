@@ -1,18 +1,25 @@
 import { prisma } from "../../lib/prisma";
 import { Prisma } from "../../../generated/prisma/client";
-import { hashPassword } from "../bcrypt/bcrypt.service";
+import { hashPassword, comparePass } from "../bcrypt/bcrypt.service";
+// interfaces
 interface setUsers {
   name: string;
   email: string;
   password: any;
 }
+interface setLogin {
+  email: string;
+  password: string;
+}
+
+// funciones
 export async function setUserService(req: setUsers) {
   const { name, email, password } = req;
   try {
     const hashPass = await hashPassword(password);
-    console.log("clave hasheada: ",hashPass)
+    console.log("clave hasheada: ", hashPass);
     const setUser = await prisma.user.create({
-      data: { name, email, "password": hashPass },
+      data: { name, email, password: hashPass },
     });
     console.log(setUser);
     return {
@@ -36,4 +43,28 @@ export async function setUserService(req: setUsers) {
       message: "bad request",
     };
   }
+}
+
+export async function loginService(req: setLogin) {
+  try {
+    const getUser = await prisma.user.findFirst({
+      where: { email: req.email },
+    });
+    if (!getUser) {
+      return {
+        status: 400,
+        message: "clave o correo incorrectos",
+      };
+    }
+    const compPass = await comparePass(req.password, getUser.password);
+
+    if (!compPass) {
+      return {
+        status: 400,
+        message: "clave o correo incorrectos",
+      };
+    }
+
+    return { status: 200, message: "usuario logeado" };
+  } catch (e) {}
 }
