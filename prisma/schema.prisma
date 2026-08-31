@@ -24,7 +24,7 @@ model User {
 
 model Invoices { 
   id    Int     @id @default(autoincrement()) 
-  email String  @unique
+  price Int  
   name  String?
   user    User    @relation(fields: [userId], references: [id]) 
   userId  Int
