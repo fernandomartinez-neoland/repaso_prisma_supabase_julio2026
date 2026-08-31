@@ -74,6 +74,6 @@ export async function loginService(req: setLogin) {
     } };
   } catch (e) {
     console.log(e)
-    return { status: 400, message:"error de login"
+    return { status: 400, message:"error de login"}
   }
 }
