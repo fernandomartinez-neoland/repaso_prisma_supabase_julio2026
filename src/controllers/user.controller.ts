@@ -7,6 +7,6 @@ const serviceRsponse=await setUserService(req.body)
 }
 
 export async function loginController(req:any, res:any){
-
-    res.send(await loginService(req.body))
+    const login=await loginService(req.body)
+    res.status(login.status).send(login.message)
 }
