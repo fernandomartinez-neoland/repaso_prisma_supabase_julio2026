@@ -8,7 +8,7 @@ import {createToken} from '../token/token.service'
 interface setUsers {
   name: string;
   email: string;
-  password: any;
+  password: string;
 }
 interface setLogin {
   email: string;
@@ -50,10 +50,8 @@ export async function setUserService(req: setUsers) {
 
 export async function loginService(req: setLogin) {
   try {
-    const getUser = await prisma.user.findFirst({
-      where: { email: req.email },
-    });
-    if (!getUser) {
+    const getUser = await getUserService(req.email);
+    if (!getUser || !getUser.password) {
       return {
         status: 400,
         message: "clave o correo incorrectos",
@@ -76,4 +74,9 @@ export async function loginService(req: setLogin) {
     console.log(e)
     return { status: 400, message:"error de login"}
   }
+}
+export async function getUserService(email:string){
+  return await prisma.user.findFirst({
+      where: { email },
+    });
 }
