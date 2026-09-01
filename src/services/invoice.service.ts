@@ -5,15 +5,15 @@ import { Prisma } from "../../generated/prisma/client";
 // interfaces
 interface setInvoice {
   name: string;
-  user: number;
+  userID: number;
   price: number;
 }
 
 // funciones
 export async function setInvoiceService(req: setInvoice) {
-  const { name, price, user } = req;
+  const { name, price, userID } = req;
 
-  const userId = Number(user);
+  const userId = Number(userID);
   if (!userId || isNaN(userId)) {
     return {
       status: 400,

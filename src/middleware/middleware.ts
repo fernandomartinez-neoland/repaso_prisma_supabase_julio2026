@@ -10,7 +10,7 @@ const token=  req.headers['authorization']
     const translateToken=verifyToken(token.replace('Bearer ', ''))
     console.log(translateToken.data.email)
     const userData= await getUserService(translateToken.data.email)
-    req.body.user=userData?.id
+    req.body.userID=userData?.id
     console.log("Este es el body:",req.body.user)
     next()
 }catch(e){
