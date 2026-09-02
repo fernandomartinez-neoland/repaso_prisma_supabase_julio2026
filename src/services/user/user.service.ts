@@ -2,14 +2,14 @@
 import { prisma } from "../../lib/prisma";
 import { Prisma } from "../../../generated/prisma/client";
 import { hashPassword, comparePass } from "../bcrypt/bcrypt.service";
-import {createToken} from '../token/token.service'
+import { createToken } from "../token/token.service";
 
 // interfaces
 interface setUsers {
   name: string;
   email: string;
   password: string;
-  img: string|null
+  img: string | null;
 }
 interface setLogin {
   email: string;
@@ -66,25 +66,50 @@ export async function loginService(req: setLogin) {
         message: "clave o correo incorrectos",
       };
     }
-    const token=createToken({name:getUser.name, email:getUser.email})
-    console.log(token)
-    return { status: 200, message: {
-        token
-    } };
+    const token = createToken({ name: getUser.name, email: getUser.email });
+    console.log(token);
+    return {
+      status: 200,
+      message: {
+        token,
+      },
+    };
   } catch (e) {
-    console.log(e)
-    return { status: 400, message:"error de login"}
+    console.log(e);
+    return { status: 400, message: "error de login" };
   }
 }
-export async function getUserService(email:string){
+export async function getUserService(email: string) {
   return await prisma.user.findFirst({
-      where: { email },
-    });
+    where: { email },
+  });
 }
 
-export async function updateUserService(req:setUsers){
-  return {
-    status:200,
-    message:"todo bien"
+export async function updateUserService(req: setUsers, file = null) {
+  const { name, email, password } = req;
+
+  try {
+    const updateUser = await prisma.user.update({
+      where: {
+        email,
+      },
+      data: {
+        name,
+        email,
+        password,
+        img: file?.replace("\\", "/"),
+      },
+    });
+
+    return {
+      status: 200,
+      message: "todo bien",
+    };
+  } catch (e) {
+    console.log(e)
+    return {
+      status:400,
+      message:"todo mal"
+    }
   }
 }

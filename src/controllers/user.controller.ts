@@ -17,6 +17,6 @@ export async function loginController(req: any, res: any) {
 
 export async function updateUserController(req: any, res: any) {
 
-    const response = await updateUserService(req.body)
+    const response = await updateUserService(req.body, req.file.path)
   res.status(response.status).send(response.message);
 }
