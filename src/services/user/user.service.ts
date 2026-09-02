@@ -9,6 +9,7 @@ interface setUsers {
   name: string;
   email: string;
   password: string;
+  img: string|null
 }
 interface setLogin {
   email: string;
@@ -79,4 +80,11 @@ export async function getUserService(email:string){
   return await prisma.user.findFirst({
       where: { email },
     });
+}
+
+export async function updateUserService(req:setUsers){
+  return {
+    status:200,
+    message:"todo bien"
+  }
 }

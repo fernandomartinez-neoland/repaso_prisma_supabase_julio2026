@@ -1,9 +1,15 @@
-import express from 'express'
-import { setUserController, loginController } from '../controllers/user.controller'
+import express from "express";
+import {
+  setUserController,
+  loginController,
+  updateUserController,
+} from "../controllers/user.controller";
 
-const router= express.Router()
+import {profileImg} from '../middleware/multer.middleware'
+const router = express.Router();
 
-router.post('/setUser', setUserController)
-router.get('/login', loginController)
+router.post("/setUser", setUserController);
+router.get("/login", loginController);
+router.patch("/updateUser", profileImg, updateUserController);
 
-export default router
+export default router;
