@@ -17,15 +17,3 @@ jobs:
         with:
           node-version: 20
 
-      - name: error estupido
-        run: npm test
-
-      - name: Trigger Render Deploy
-        if: success()
-        run: |
-          if [ -n "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" ]; then
-            curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-          else
-            echo "RENDER_DEPLOY_HOOK_URL no está configurado en GitHub Secrets."
-          fi
- 
