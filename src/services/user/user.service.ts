@@ -85,7 +85,7 @@ export async function getUserService(email: string) {
   });
 }
 
-export async function updateUserService(req: setUsers, file = null) {
+export async function updateUserService(req: setUsers, file: string | null = null) {
   const { name, email, password } = req;
 
   try {
@@ -97,7 +97,7 @@ export async function updateUserService(req: setUsers, file = null) {
         name,
         email,
         password,
-        img: file?.replace("\\", "/"),
+        img: file ? file.replace("\\", "/") : null,
       },
     });
 
