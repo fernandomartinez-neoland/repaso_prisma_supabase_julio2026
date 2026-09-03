@@ -1,6 +1,6 @@
-import { verifyToken } from "../services/token/token.service";
+import { verifyToken } from "../services/token/token.service.js";
 
-import { getUserService } from '../services/user/user.service'
+import { getUserService } from '../services/user/user.service.js'
 
 export async function userMiddleware(req: any, res: any, next: any) {
     try {

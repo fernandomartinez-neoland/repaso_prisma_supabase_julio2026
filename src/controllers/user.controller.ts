@@ -2,7 +2,7 @@ import {
   setUserService,
   loginService,
   updateUserService,
-} from "../services/user/user.service";
+} from "../services/user/user.service.js";
 
 export async function setUserController(req: any, res: any) {
   const serviceRsponse = await setUserService(req.body);

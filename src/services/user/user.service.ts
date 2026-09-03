@@ -1,8 +1,8 @@
 // importaciones
-import { prisma } from "../../lib/prisma";
-import { Prisma } from "../../../generated/prisma/client";
-import { hashPassword, comparePass } from "../bcrypt/bcrypt.service";
-import { createToken } from "../token/token.service";
+import { prisma } from "../../lib/prisma.js";
+import { Prisma } from "../../../generated/prisma/client.js";
+import { hashPassword, comparePass } from "../bcrypt/bcrypt.service.js";
+import { createToken } from "../token/token.service.js";
 
 // interfaces
 interface setUsers {

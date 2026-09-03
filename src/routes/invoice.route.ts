@@ -1,5 +1,5 @@
 import express from 'express'
-import {setInvoiceController} from '../controllers/invoice.controller'
+import {setInvoiceController} from '../controllers/invoice.controller.js'
 
 const router= express.Router()
 

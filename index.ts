@@ -1,8 +1,8 @@
 // importaciones
 import express from 'express'
-import userRouter from './src/routes/user.route'
-import invoiceRouter from './src/routes/invoice.route'
-import { userMiddleware } from './src/middleware/middleware'
+import userRouter from './src/routes/user.route.js'
+import invoiceRouter from './src/routes/invoice.route.js'
+import { userMiddleware } from './src/middleware/middleware.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
