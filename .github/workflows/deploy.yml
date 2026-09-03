@@ -17,5 +17,5 @@ jobs:
         with:
           node-version: 20
 
-      - name: Log message
-        run: node -e 'console.log("voy de subida")'
+      - name: error estupido
+        run: npm test
