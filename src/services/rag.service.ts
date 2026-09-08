@@ -1,6 +1,7 @@
 // src/services/rag.service.ts
 import { prisma } from "../lib/prisma.js";
 import { getEmbedding } from "./embedding.service.js";
+import { RerankerService } from "./reranker.service.js";
 
 export class RagService {
   // 1. Guardar documento con su vector en la base de datos
@@ -74,6 +75,52 @@ Instrucciones: Responde a la pregunta basándote únicamente en el contexto prop
     return {
       promptGeneradoParaLLM: prompt,
       sources: docs,
+    };
+  }
+
+  static async askRAGWithReranker(question: string) {
+    // FASE 1: Recuperación amplia con pgvector
+    // Traemos 6 documentos candidatos con un umbral más bajo (recuperación generosa)
+    const initialCandidates = await this.searchSimilar(question, 6, 0.2);
+    if (initialCandidates.length === 0) {
+      return {
+        message: "No se encontraron documentos candidatos.",
+        candidatesFromVectorDB: [],
+        rerankedResults: [],
+      };
+    }
+    // FASE 2: Reordenamiento con el Cross-Encoder
+    // Evaluamos los 6 y nos quedamos con los 2 mejores
+    const topDocs = await RerankerService.rerank(
+      question,
+      initialCandidates,
+      1,
+    );
+    // FASE 3: Generación con contexto refinado
+    const contextText = topDocs
+      .map((d) => `- ${d.title}: ${d.content}`)
+      .join("\n\n");
+    const prompt = `
+Contexto de alta precisión (Filtrado por Reranker):
+"""
+${contextText}
+"""
+Pregunta: ${question}
+Instrucciones: Responde a la pregunta basándote estrictamente en el , dentro del contexto usa aquello que tenga mas que ver con la pregunta del usuario, si el contexto tiene informacion de varios vectores, usa solo el vector que tenga mayor rerankScore.
+`;
+    return {
+      question,
+      // Para que los alumnos puedan comparar el ANTES y el DESPUÉS:
+      candidatosInicialesPgvector: initialCandidates.map((c) => ({
+        title: c.title,
+        vectorSimilarity: c.similarity,
+      })),
+      ganadoresTrasRerank: topDocs.map((d) => ({
+        title: d.title,
+        vectorSimilarity: d.similarity,
+        rerankScore: d.rerankScore,
+      })),
+      promptGenerado: prompt,
     };
   }
 }
