@@ -106,7 +106,7 @@ Contexto de alta precisión (Filtrado por Reranker):
 ${contextText}
 """
 Pregunta: ${question}
-Instrucciones: Responde a la pregunta basándote estrictamente en el , dentro del contexto usa aquello que tenga mas que ver con la pregunta del usuario, si el contexto tiene informacion de varios vectores, usa solo el vector que tenga mayor rerankScore.
+Instrucciones: Responde a la pregunta basándote estrictamente en el contexto de arriba, dentro del contexto usa aquello que tenga mas que ver con la pregunta del usuario, si el contexto tiene informacion de varios vectores, usa solo el vector que tenga mayor rerankScore.
 `;
     return {
       question,
