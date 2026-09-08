@@ -3,6 +3,7 @@ import express from 'express'
 import userRouter from './src/routes/user.route.js'
 import invoiceRouter from './src/routes/invoice.route.js'
 import { userMiddleware } from './src/middleware/middleware.js'
+import ragRouter from './src/routes/rag.route.js';
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/user', userRouter)
 app.use('/api/invoices', userMiddleware, invoiceRouter)
+app.use('/api/rag', ragRouter);
 
 app.listen(port, () => {
     console.log("http://localhost:" + port)

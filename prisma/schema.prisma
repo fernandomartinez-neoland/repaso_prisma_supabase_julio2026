@@ -39,3 +39,11 @@ model Post {
   author    User    @relation(fields: [authorId], references: [id]) 
   authorId  Int
 } 
+
+model Document {
+  id        Int                          @id @default(autoincrement())
+  title     String
+  content   String
+  embedding Unsupported("vector(384)")?  // Usa 384 para Xenova/all-MiniLM-L6-v2 o 1536 para OpenAI
+  createdAt DateTime                     @default(now())
+}
