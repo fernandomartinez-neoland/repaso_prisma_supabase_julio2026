@@ -1,6 +1,6 @@
 // importaciones
-import { prisma } from "../lib/prisma.js";
-import { Prisma } from "../../generated/prisma/client.js";
+import { prisma } from "../../lib/prisma.js";
+import { Prisma } from "../../../generated/prisma/client.js";
 
 // interfaces
 interface setInvoice {

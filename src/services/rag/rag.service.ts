@@ -1,7 +1,8 @@
 // src/services/rag.service.ts
-import { prisma } from "../lib/prisma.js";
+import { prisma } from "../../lib/prisma.js";
 import { getEmbedding } from "./embedding.service.js";
 import { RerankerService } from "./reranker.service.js";
+import { ollamaAI } from "./ai.service.js";
 
 export class RagService {
   // 1. Guardar documento con su vector en la base de datos
@@ -121,6 +122,7 @@ Instrucciones: Responde a la pregunta basándote estrictamente en el contexto de
         rerankScore: d.rerankScore,
       })),
       promptGenerado: prompt,
+      respuestaIA: await ollamaAI(prompt),
     };
   }
 }

@@ -1,6 +1,6 @@
 // src/controllers/rag.controller.ts
 import { Request, Response } from 'express';
-import { RagService } from '../services/rag.service.js';
+import { RagService } from '../services/rag/rag.service.js';
 
 export const createDocument = async (req: Request, res: Response) => {
   try {
