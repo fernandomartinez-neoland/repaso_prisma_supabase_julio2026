@@ -9,7 +9,7 @@ import {profileImg} from '../middleware/multer.middleware.js'
 const router = express.Router();
 
 router.post("/setUser", setUserController);
-router.get("/login", loginController);
+router.post("/login", loginController);
 router.patch("/updateUser", profileImg, updateUserController);
 
 export default router;

@@ -51,6 +51,7 @@ export async function setUserService(req: setUsers) {
 
 export async function loginService(req: setLogin) {
   try {
+    console.log("holi")
     const getUser = await getUserService(req.email);
     if (!getUser || !getUser.password) {
       return {
